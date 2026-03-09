@@ -17,8 +17,8 @@ export function ProductGrid({ category }: Props) {
     if (category !== "todos") params.category = category;
 
     api
-      .get<Product[]>("/products", { params })
-      .then((res) => setProducts(res.data))
+      .get<{ items: Product[]; total: number }>("/products", { params })
+      .then((res) => setProducts(res.data.items))
       .catch(() => setProducts([]))
       .finally(() => setLoading(false));
   }, [category]);

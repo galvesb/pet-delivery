@@ -28,7 +28,7 @@ export function Header() {
         <ul className={`nav-links${menuOpen ? " active" : ""}`} id="nav-links">
           <li><Link to="/" onClick={() => setMenuOpen(false)}>Início</Link></li>
           <li><a href="/#servicos" onClick={() => setMenuOpen(false)}>Serviços</a></li>
-          <li><a href="/#menu-produtos" onClick={() => setMenuOpen(false)}>Produtos</a></li>
+          <li><Link to="/products" onClick={() => setMenuOpen(false)}>Produtos</Link></li>
           {user?.role === "ADMIN" && (
             <li><Link to="/admin" onClick={() => setMenuOpen(false)}>Admin</Link></li>
           )}

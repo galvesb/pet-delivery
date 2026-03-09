@@ -1,6 +1,14 @@
+from enum import Enum
 from typing import List, Optional
 
 from pydantic import BaseModel, Field, field_validator
+
+
+class SortBy(str, Enum):
+    NEWEST = "newest"
+    PRICE_ASC = "price_asc"
+    PRICE_DESC = "price_desc"
+    NAME_ASC = "name_asc"
 
 
 class ProductCreate(BaseModel):
@@ -56,3 +64,8 @@ class ProductResponse(BaseModel):
     is_active: bool
 
     model_config = {"from_attributes": True}
+
+
+class ProductListResponse(BaseModel):
+    items: List[ProductResponse]
+    total: int

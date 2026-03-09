@@ -10,8 +10,8 @@ export function ProductsPage() {
   const [editing, setEditing] = useState<Product | null | undefined>(undefined);
 
   const load = async () => {
-    const res = await api.get<Product[]>("/products");
-    setProducts(res.data);
+    const res = await api.get<{ items: Product[]; total: number }>("/products", { params: { limit: 100 } });
+    setProducts(res.data.items);
   };
 
   useEffect(() => { load(); }, []);

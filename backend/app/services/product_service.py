@@ -5,7 +5,7 @@ from fastapi import HTTPException
 from app.db.repositories.category_repo import CategoryRepository
 from app.db.repositories.product_repo import ProductRepository
 from app.models.product import Product
-from app.schemas.product import ProductCreate, ProductResponse, ProductUpdate
+from app.schemas.product import ProductCreate, ProductListResponse, ProductResponse, ProductUpdate
 
 product_repo = ProductRepository()
 category_repo = CategoryRepository()
@@ -44,6 +44,30 @@ async def list_products(
 ) -> List[ProductResponse]:
     products = await product_repo.find_by_category(category, skip, limit)
     return [_to_response(p) for p in products]
+
+
+async def search_products(
+    search: Optional[str] = None,
+    categories: Optional[List[str]] = None,
+    min_price: Optional[float] = None,
+    max_price: Optional[float] = None,
+    sort_by: str = "newest",
+    skip: int = 0,
+    limit: int = 20,
+) -> ProductListResponse:
+    products, total = await product_repo.search_products(
+        search=search,
+        categories=categories,
+        min_price=min_price,
+        max_price=max_price,
+        sort_by=sort_by,
+        skip=skip,
+        limit=limit,
+    )
+    return ProductListResponse(
+        items=[_to_response(p) for p in products],
+        total=total,
+    )
 
 
 async def get_product(id: str) -> ProductResponse:
