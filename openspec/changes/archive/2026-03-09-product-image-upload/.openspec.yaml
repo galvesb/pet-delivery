@@ -1,0 +1,26 @@
+schema: spec-driven
+name: product-image-upload
+status: ready
+created: 2026-03-08
+
+apply:
+  requires:
+    - tasks
+
+artifacts:
+  - id: proposal
+    path: proposal.md
+    status: done
+    dependencies: []
+  - id: design
+    path: design.md
+    status: done
+    dependencies: [proposal]
+  - id: specs
+    path: specs/
+    status: done
+    dependencies: [proposal]
+  - id: tasks
+    path: tasks.md
+    status: done
+    dependencies: [design, specs]

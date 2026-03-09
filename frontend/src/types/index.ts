@@ -24,7 +24,9 @@ export interface Product {
   name: string;
   description: string;
   price: number;
-  image_url: string;
+  image_urls: string[];
+  cover_index: number;
+  cover_url: string;
   categories: string[];
   is_active: boolean;
 }

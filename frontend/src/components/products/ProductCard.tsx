@@ -1,3 +1,4 @@
+import { useNavigate } from "react-router-dom";
 import type { Product } from "@/types";
 import { useCart } from "@/hooks/useCart";
 
@@ -7,15 +8,21 @@ interface Props {
 
 export function ProductCard({ product }: Props) {
   const { addItem } = useCart();
+  const navigate = useNavigate();
 
-  const handleAdd = () => {
+  const handleAdd = (e: React.MouseEvent) => {
+    e.stopPropagation();
     addItem(product);
   };
 
   return (
-    <div className="product-card">
+    <div
+      className="product-card"
+      onClick={() => navigate(`/produto/${product.id}`)}
+      style={{ cursor: "pointer" }}
+    >
       <div className="product-img">
-        <img src={product.image_url} alt={product.name} loading="lazy" />
+        <img src={product.cover_url} alt={product.name} loading="lazy" />
       </div>
       <div className="product-info">
         <h4>{product.name}</h4>
@@ -24,7 +31,11 @@ export function ProductCard({ product }: Props) {
           <span className="product-price">
             R$ {product.price.toFixed(2).replace(".", ",")}
           </span>
-          <button className="add-to-cart-btn" onClick={handleAdd} aria-label={`Adicionar ${product.name} ao carrinho`}>
+          <button
+            className="add-to-cart-btn"
+            onClick={handleAdd}
+            aria-label={`Adicionar ${product.name} ao carrinho`}
+          >
             + Add
           </button>
         </div>

@@ -236,6 +236,80 @@ header {
 .cart-total { display: flex; justify-content: space-between; font-size: 20px; font-weight: 700; margin-bottom: 15px; }
 .checkout-btn { width: 100%; text-align: center; }
 
+/* PRODUCT DETAIL */
+.product-detail-layout {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 48px;
+    align-items: start;
+}
+.product-detail-price {
+    font-size: 32px;
+    font-weight: 700;
+    color: var(--primary-red);
+    margin-bottom: 16px;
+}
+.product-detail-description {
+    color: var(--gray-text);
+    font-size: 15px;
+    line-height: 1.7;
+    margin-bottom: 16px;
+    white-space: pre-line;
+}
+.product-detail-categories {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 8px;
+}
+.category-badge {
+    background: var(--light-red);
+    border: var(--border-thick);
+    border-radius: 20px;
+    padding: 4px 14px;
+    font-size: 13px;
+    font-weight: 600;
+}
+
+/* PRODUCT GALLERY — foto principal à esquerda, thumbs à direita */
+.product-gallery { display: flex; flex-direction: row; gap: 12px; }
+.gallery-main {
+    border: var(--border-thick);
+    border-radius: var(--border-radius);
+    overflow: hidden;
+    aspect-ratio: 1 / 1;
+    background: #E2E8F0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex: 1;
+    min-width: 0;
+}
+.gallery-main img { width: 100%; height: 100%; object-fit: cover; }
+.gallery-thumbs {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    overflow-y: auto;
+    max-height: 100%;
+}
+.gallery-thumb {
+    width: 72px;
+    height: 72px;
+    border: 2px solid var(--dark);
+    border-radius: 8px;
+    overflow: hidden;
+    cursor: pointer;
+    padding: 0;
+    background: none;
+    opacity: 0.65;
+    transition: opacity 0.2s, border-color 0.2s;
+    flex-shrink: 0;
+}
+.gallery-thumb:hover { opacity: 1; }
+.gallery-thumb.active { opacity: 1; border-color: var(--primary-red); box-shadow: 2px 2px 0 var(--primary-red); }
+.gallery-thumb img { width: 100%; height: 100%; object-fit: cover; }
+
 /* FOOTER */
 footer {
     background-color: var(--primary-red); color: var(--white);
@@ -265,4 +339,7 @@ footer {
     .header-actions .btn { display: none; }
     .hero-title { font-size: 36px; }
     .product-grid { grid-template-columns: 1fr; }
+    .product-detail-layout { grid-template-columns: 1fr; gap: 24px; }
+    .product-gallery { flex-direction: column; }
+    .gallery-thumbs { flex-direction: row; flex-wrap: wrap; overflow-y: visible; max-height: none; }
 }

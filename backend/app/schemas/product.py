@@ -1,21 +1,22 @@
 from typing import List, Optional
 
-from pydantic import BaseModel, Field, HttpUrl, field_validator
+from pydantic import BaseModel, Field, field_validator
 
 
 class ProductCreate(BaseModel):
     name: str = Field(min_length=2, max_length=200)
-    description: str = Field(default="", max_length=500)
+    description: str = Field(default="", max_length=2000)
     price: float = Field(gt=0)
-    image_url: str
+    image_urls: List[str] = Field(min_length=1, max_length=5)
+    cover_index: int = Field(default=0, ge=0)
     categories: List[str] = Field(min_length=1)
 
-    @field_validator("image_url")
+    @field_validator("cover_index")
     @classmethod
-    def validate_url(cls, v: str) -> str:
-        # Validação simples de URL
-        if not v.startswith(("http://", "https://")):
-            raise ValueError("image_url deve ser uma URL válida (http/https)")
+    def cover_index_in_range(cls, v: int, info) -> int:
+        urls = info.data.get("image_urls", [])
+        if urls and v >= len(urls):
+            raise ValueError(f"cover_index {v} fora do intervalo (0-{len(urls)-1})")
         return v
 
     @field_validator("categories")
@@ -28,18 +29,12 @@ class ProductCreate(BaseModel):
 
 class ProductUpdate(BaseModel):
     name: Optional[str] = Field(None, min_length=2, max_length=200)
-    description: Optional[str] = Field(None, max_length=500)
+    description: Optional[str] = Field(None, max_length=2000)
     price: Optional[float] = Field(None, gt=0)
-    image_url: Optional[str] = None
+    image_urls: Optional[List[str]] = Field(None, max_length=5)
+    cover_index: Optional[int] = Field(None, ge=0)
     categories: Optional[List[str]] = None
     is_active: Optional[bool] = None
-
-    @field_validator("image_url")
-    @classmethod
-    def validate_url(cls, v: Optional[str]) -> Optional[str]:
-        if v and not v.startswith(("http://", "https://")):
-            raise ValueError("image_url deve ser uma URL válida (http/https)")
-        return v
 
     @field_validator("categories")
     @classmethod
@@ -54,7 +49,9 @@ class ProductResponse(BaseModel):
     name: str
     description: str
     price: float
-    image_url: str
+    image_urls: List[str]
+    cover_index: int
+    cover_url: str
     categories: List[str]
     is_active: bool
 

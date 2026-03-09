@@ -12,12 +12,16 @@ category_repo = CategoryRepository()
 
 
 def _to_response(p: Product) -> ProductResponse:
+    cover_idx = p.cover_index if p.cover_index < len(p.image_urls) else 0
+    cover_url = p.image_urls[cover_idx] if p.image_urls else ""
     return ProductResponse(
         id=str(p.id),
         name=p.name,
         description=p.description,
         price=p.price,
-        image_url=p.image_url,
+        image_urls=p.image_urls,
+        cover_index=cover_idx,
+        cover_url=cover_url,
         categories=p.categories,
         is_active=p.is_active,
     )
@@ -55,7 +59,8 @@ async def create_product(data: ProductCreate) -> ProductResponse:
         name=data.name,
         description=data.description,
         price=data.price,
-        image_url=data.image_url,
+        image_urls=data.image_urls,
+        cover_index=data.cover_index,
         categories=data.categories,
     )
     product = await product_repo.create(product)

@@ -10,7 +10,8 @@ class Product(Document):
     name: str
     description: str = ""
     price: float
-    image_url: str
+    image_urls: List[str] = Field(default_factory=list)
+    cover_index: int = 0
     categories: List[str] = Field(default_factory=list)  # array de slugs
     is_active: bool = True
     created_at: datetime = Field(default_factory=lambda: datetime.now(UTC))

@@ -1,8 +1,10 @@
 import logging
 from contextlib import asynccontextmanager
+from pathlib import Path
 
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.staticfiles import StaticFiles
 from slowapi.errors import RateLimitExceeded
 from slowapi import _rate_limit_exceeded_handler
 
@@ -45,6 +47,8 @@ async def lifespan(app: FastAPI):
     client = get_motor_client()
     await init_db(client)
     await _seed_admin()
+    # Garante que o diretório de uploads existe
+    Path("uploads/products").mkdir(parents=True, exist_ok=True)
     logger.info("Aplicação iniciada")
     yield
     client.close()
@@ -74,6 +78,11 @@ app.add_middleware(
 
 # Security Headers
 app.add_middleware(SecurityHeadersMiddleware)
+
+# Servir uploads como estático (dev — em prod o Nginx faz isso)
+uploads_dir = Path("uploads")
+uploads_dir.mkdir(parents=True, exist_ok=True)
+app.mount("/uploads", StaticFiles(directory=str(uploads_dir)), name="uploads")
 
 # Rotas
 app.include_router(router)

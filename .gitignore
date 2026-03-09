@@ -20,6 +20,9 @@ dist/
 # Docker volumes
 mongo_data/
 
+# Uploads (gerenciado pelo volume Docker)
+backend/uploads/products/*.webp
+
 # Backups
 backups/
 
