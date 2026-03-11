@@ -154,7 +154,7 @@ header {
 
 /* SERVICES */
 .services { padding: 60px 0; text-align: center; }
-.services h2 { font-size: 36px; margin-bottom: 40px; }
+.services h2 { font-size: 36px; margin-bottom: 40px; text-align: left; }
 .services-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 30px; }
 .service-card {
     background: var(--white); border: var(--border-thick);
@@ -691,9 +691,8 @@ footer {
     overflow: hidden;
 }
 .brand-partners h2 {
-    font-size: 24px;
-    margin-bottom: 28px;
-    color: var(--gray-text);
+    font-size: 32px;
+    margin-bottom: 32px;
 }
 .brand-marquee-outer {
     overflow: hidden;
