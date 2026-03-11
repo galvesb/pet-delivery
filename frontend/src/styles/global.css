@@ -688,30 +688,44 @@ footer {
 .brand-partners {
     padding: 48px 0;
     background: var(--bg-color);
+    overflow: hidden;
 }
 .brand-partners h2 {
     font-size: 24px;
     margin-bottom: 28px;
     color: var(--gray-text);
 }
-.brand-partners-logos {
+.brand-marquee-outer {
+    overflow: hidden;
+    width: 100%;
+    mask-image: linear-gradient(to right, transparent 0%, black 10%, black 90%, transparent 100%);
+    -webkit-mask-image: linear-gradient(to right, transparent 0%, black 10%, black 90%, transparent 100%);
+}
+.brand-marquee-track {
     display: flex;
-    flex-wrap: wrap;
-    gap: 32px;
-    align-items: center;
-    justify-content: center;
+    gap: 0;
+    width: max-content;
+    animation: brand-scroll 28s linear infinite;
+}
+.brand-marquee-track:hover {
+    animation-play-state: paused;
+}
+@keyframes brand-scroll {
+    0%   { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
 }
 .brand-logo-wrapper {
-    padding: 12px;
+    padding: 12px 28px;
+    flex-shrink: 0;
     transition: transform 0.2s;
 }
-.brand-logo-wrapper:hover { transform: scale(1.05); }
+.brand-logo-wrapper:hover { transform: scale(1.08); }
 .brand-logo {
     max-height: 60px;
     width: auto;
     filter: grayscale(1);
-    opacity: 0.7;
-    transition: filter 0.2s, opacity 0.2s;
+    opacity: 0.6;
+    transition: filter 0.3s, opacity 0.3s;
 }
 .brand-logo-wrapper:hover .brand-logo {
     filter: grayscale(0);
