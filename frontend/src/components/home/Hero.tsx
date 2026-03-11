@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom";
+
 export function Hero() {
   return (
     <section className="hero container">
@@ -7,7 +9,7 @@ export function Hero() {
           Fornecemos rações, acessórios e um serviço completo de banho e tosa
           entregando conforto para você e seu melhor amigo.
         </p>
-        <a href="#menu-produtos" className="btn">Explorar Produtos</a>
+        <Link to="/products" className="btn">Explorar Produtos</Link>
         <div className="hero-stats">
           <div className="stat">
             <h3>500+</h3>

@@ -11,6 +11,7 @@ import { ProductDetailPage } from "@/pages/ProductDetailPage";
 import { ProductsPage } from "@/pages/ProductsPage";
 import { DashboardPage } from "@/pages/admin/DashboardPage";
 import { ProductsPage as AdminProductsPage } from "@/pages/admin/ProductsPage";
+import { ProductFormPage } from "@/pages/admin/ProductFormPage";
 import { CategoriesPage } from "@/pages/admin/CategoriesPage";
 
 export function App() {
@@ -30,6 +31,8 @@ export function App() {
           <Route element={<ProtectedRoute requiredRole="ADMIN" />}>
             <Route path="/admin" element={<DashboardPage />} />
             <Route path="/admin/products" element={<AdminProductsPage />} />
+            <Route path="/admin/products/new" element={<ProductFormPage />} />
+            <Route path="/admin/products/:id/edit" element={<ProductFormPage />} />
             <Route path="/admin/categories" element={<CategoriesPage />} />
           </Route>
         </Routes>
