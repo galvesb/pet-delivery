@@ -10,6 +10,7 @@ interface ProductFormData {
   image_urls: string[];
   cover_index: number;
   categories: string[];
+  is_featured: boolean;
 }
 
 interface Props {
@@ -31,6 +32,7 @@ export function ProductForm({ initial, onSubmit, onCancel }: Props) {
     }));
   });
   const [selectedCats, setSelectedCats] = useState<string[]>(initial?.categories ?? []);
+  const [isFeatured, setIsFeatured] = useState(initial?.is_featured ?? false);
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
@@ -55,6 +57,7 @@ export function ProductForm({ initial, onSubmit, onCancel }: Props) {
         image_urls: images.map((i) => i.url),
         cover_index: coverIdx >= 0 ? coverIdx : 0,
         categories: selectedCats,
+        is_featured: isFeatured,
       });
     } finally {
       setLoading(false);
@@ -118,6 +121,19 @@ export function ProductForm({ initial, onSubmit, onCancel }: Props) {
             <span style={{ color: "var(--gray-text)", fontSize: 13 }}>Crie categorias primeiro</span>
           )}
         </div>
+      </div>
+
+      <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
+        <input
+          type="checkbox"
+          id="is_featured"
+          checked={isFeatured}
+          onChange={(e) => setIsFeatured(e.target.checked)}
+          style={{ width: 18, height: 18, cursor: "pointer" }}
+        />
+        <label htmlFor="is_featured" style={{ fontWeight: 600, cursor: "pointer", fontSize: 14 }}>
+          Produto em destaque (aparece na página inicial)
+        </label>
       </div>
 
       <div style={{ display: "flex", gap: 8, marginTop: 8 }}>

@@ -24,6 +24,7 @@ def _to_response(p: Product) -> ProductResponse:
         cover_url=cover_url,
         categories=p.categories,
         is_active=p.is_active,
+        is_featured=p.is_featured,
     )
 
 
@@ -54,6 +55,7 @@ async def search_products(
     sort_by: str = "newest",
     skip: int = 0,
     limit: int = 20,
+    featured: Optional[bool] = None,
 ) -> ProductListResponse:
     products, total = await product_repo.search_products(
         search=search,
@@ -63,6 +65,7 @@ async def search_products(
         sort_by=sort_by,
         skip=skip,
         limit=limit,
+        featured=featured,
     )
     return ProductListResponse(
         items=[_to_response(p) for p in products],
@@ -86,6 +89,7 @@ async def create_product(data: ProductCreate) -> ProductResponse:
         image_urls=data.image_urls,
         cover_index=data.cover_index,
         categories=data.categories,
+        is_featured=data.is_featured,
     )
     product = await product_repo.create(product)
     return _to_response(product)

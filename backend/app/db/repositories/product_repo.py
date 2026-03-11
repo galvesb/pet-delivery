@@ -30,8 +30,12 @@ class ProductRepository(BaseRepository[Product]):
         sort_by: str = "newest",
         skip: int = 0,
         limit: int = 20,
+        featured: Optional[bool] = None,
     ) -> Tuple[List[Product], int]:
         filters: dict = {"is_active": True}
+
+        if featured is not None:
+            filters["is_featured"] = featured
 
         if search:
             filters["$text"] = {"$search": search}

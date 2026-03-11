@@ -18,6 +18,7 @@ class ProductCreate(BaseModel):
     image_urls: List[str] = Field(min_length=1, max_length=5)
     cover_index: int = Field(default=0, ge=0)
     categories: List[str] = Field(min_length=1)
+    is_featured: bool = False
 
     @field_validator("cover_index")
     @classmethod
@@ -43,6 +44,7 @@ class ProductUpdate(BaseModel):
     cover_index: Optional[int] = Field(None, ge=0)
     categories: Optional[List[str]] = None
     is_active: Optional[bool] = None
+    is_featured: Optional[bool] = None
 
     @field_validator("categories")
     @classmethod
@@ -62,6 +64,7 @@ class ProductResponse(BaseModel):
     cover_url: str
     categories: List[str]
     is_active: bool
+    is_featured: bool
 
     model_config = {"from_attributes": True}
 

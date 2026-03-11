@@ -19,6 +19,8 @@ def get_motor_client() -> AsyncIOMotorClient:
 
 async def init_db(client: AsyncIOMotorClient) -> None:
     # Importação aqui para evitar circular imports
+    from app.models.banner import Banner
+    from app.models.brand import Brand
     from app.models.category import Category
     from app.models.product import Product
     from app.models.user import User
@@ -27,5 +29,5 @@ async def init_db(client: AsyncIOMotorClient) -> None:
     db = client[settings.MONGO_DB]
     await init_beanie(
         database=db,
-        document_models=[Category, Product, User, RevokedToken],
+        document_models=[Banner, Brand, Category, Product, User, RevokedToken],
     )

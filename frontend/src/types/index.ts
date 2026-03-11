@@ -29,6 +29,27 @@ export interface Product {
   cover_url: string;
   categories: string[];
   is_active: boolean;
+  is_featured: boolean;
+}
+
+export interface Banner {
+  id: string;
+  title: string;
+  subtitle: string;
+  bg_color: string;
+  text_color: string;
+  link_url: string;
+  link_text: string;
+  is_active: boolean;
+  order: number;
+}
+
+export interface Brand {
+  id: string;
+  name: string;
+  logo_url: string;
+  is_active: boolean;
+  order: number;
 }
 
 export interface CartItem {

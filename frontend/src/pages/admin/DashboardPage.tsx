@@ -37,12 +37,18 @@ export function DashboardPage() {
         </div>
       </div>
 
-      <div style={{ display: "flex", gap: 16 }}>
-        <Link to="/admin/products" className="btn" style={{ flex: 1, textAlign: "center" }}>
+      <div style={{ display: "grid", gridTemplateColumns: "repeat(2, 1fr)", gap: 16 }}>
+        <Link to="/admin/products" className="btn" style={{ textAlign: "center" }}>
           Gerenciar Produtos
         </Link>
-        <Link to="/admin/categories" className="btn btn-outline" style={{ flex: 1, textAlign: "center" }}>
+        <Link to="/admin/categories" className="btn btn-outline" style={{ textAlign: "center" }}>
           Gerenciar Categorias
+        </Link>
+        <Link to="/admin/banners" className="btn btn-outline" style={{ textAlign: "center" }}>
+          Gerenciar Banners
+        </Link>
+        <Link to="/admin/brands" className="btn btn-outline" style={{ textAlign: "center" }}>
+          Gerenciar Marcas
         </Link>
       </div>
     </div>

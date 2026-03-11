@@ -24,6 +24,7 @@ async def list_products(
     sort_by: SortBy = Query(SortBy.NEWEST, description="Ordenação"),
     min_price: Optional[float] = Query(None, ge=0, description="Preço mínimo"),
     max_price: Optional[float] = Query(None, ge=0, description="Preço máximo"),
+    featured: Optional[bool] = Query(None, description="Filtrar produtos em destaque"),
     skip: int = Query(0, ge=0),
     limit: int = Query(20, ge=1, le=100),
 ):
@@ -41,6 +42,7 @@ async def list_products(
         sort_by=sort_by.value,
         skip=skip,
         limit=limit,
+        featured=featured,
     )
 
 
