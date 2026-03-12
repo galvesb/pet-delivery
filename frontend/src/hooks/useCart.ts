@@ -37,6 +37,14 @@ export function useCart() {
     [store, syncToServer]
   );
 
+  const updateQuantity = useCallback(
+    (product_id: string, delta: number) => {
+      store.updateQuantity(product_id, delta);
+      syncToServer();
+    },
+    [store, syncToServer]
+  );
+
   const clearCart = useCallback(async () => {
     store.clearCart();
     if (user) {
@@ -58,6 +66,7 @@ export function useCart() {
     toggleCart: store.toggleCart,
     addItem,
     removeItem,
+    updateQuantity,
     clearCart,
   };
 }

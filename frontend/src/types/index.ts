@@ -30,6 +30,7 @@ export interface Product {
   categories: string[];
   is_active: boolean;
   is_featured: boolean;
+  stock: number;
 }
 
 export interface Banner {
@@ -58,6 +59,7 @@ export interface CartItem {
   price: number;
   image_url: string;
   quantity: number;
+  stock: number;
 }
 
 export interface CartResponse {

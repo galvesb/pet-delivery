@@ -8,7 +8,7 @@ import { useCart } from "@/hooks/useCart";
 export function ProductDetailPage() {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
-  const { addItem, openCart } = useCart();
+  const { addItem, openCart, items } = useCart();
   const [product, setProduct] = useState<Product | null>(null);
   const [categories, setCategories] = useState<Category[]>([]);
   const [loading, setLoading] = useState(true);
@@ -29,8 +29,13 @@ export function ProductDetailPage() {
       .finally(() => setLoading(false));
   }, [id]);
 
+  const inCart = product ? items.find((i) => i.product_id === product.id) : undefined;
+  const outOfStock = product ? product.stock === 0 : false;
+  const atMax = product && !outOfStock && inCart ? inCart.quantity >= product.stock : false;
+  const addDisabled = outOfStock || atMax;
+
   const handleAdd = () => {
-    if (!product) return;
+    if (!product || addDisabled) return;
     addItem(product);
     openCart();
   };
@@ -105,9 +110,10 @@ export function ProductDetailPage() {
           <button
             className="btn"
             onClick={handleAdd}
+            disabled={addDisabled}
             style={{ width: "100%", marginTop: 24, fontSize: 16, padding: "14px 24px" }}
           >
-            + Adicionar ao carrinho
+            {outOfStock ? "Produto esgotado" : atMax ? "Limite no carrinho" : "+ Adicionar ao carrinho"}
           </button>
         </div>
       </div>

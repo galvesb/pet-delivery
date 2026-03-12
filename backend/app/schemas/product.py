@@ -19,6 +19,7 @@ class ProductCreate(BaseModel):
     cover_index: int = Field(default=0, ge=0)
     categories: List[str] = Field(min_length=1)
     is_featured: bool = False
+    stock: int = Field(default=0, ge=0)
 
     @field_validator("cover_index")
     @classmethod
@@ -45,6 +46,7 @@ class ProductUpdate(BaseModel):
     categories: Optional[List[str]] = None
     is_active: Optional[bool] = None
     is_featured: Optional[bool] = None
+    stock: Optional[int] = Field(None, ge=0)
 
     @field_validator("categories")
     @classmethod
@@ -65,6 +67,7 @@ class ProductResponse(BaseModel):
     categories: List[str]
     is_active: bool
     is_featured: bool
+    stock: int
 
     model_config = {"from_attributes": True}
 

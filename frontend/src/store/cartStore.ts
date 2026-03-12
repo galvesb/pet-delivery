@@ -6,6 +6,7 @@ interface CartState {
   isOpen: boolean;
   addItem: (product: Product) => void;
   removeItem: (product_id: string) => void;
+  updateQuantity: (product_id: string, delta: number) => void;
   clearCart: () => void;
   setItems: (items: CartItem[]) => void;
   getTotal: () => number;
@@ -23,6 +24,7 @@ export const useCartStore = create<CartState>((set, get) => ({
     set((state) => {
       const existing = state.items.find((i) => i.product_id === product.id);
       if (existing) {
+        if (product.stock > 0 && existing.quantity >= product.stock) return state;
         return {
           items: state.items.map((i) =>
             i.product_id === product.id
@@ -31,6 +33,7 @@ export const useCartStore = create<CartState>((set, get) => ({
           ),
         };
       }
+      if (product.stock === 0) return state;
       return {
         items: [
           ...state.items,
@@ -40,8 +43,26 @@ export const useCartStore = create<CartState>((set, get) => ({
             price: product.price,
             image_url: product.cover_url,
             quantity: 1,
+            stock: product.stock,
           },
         ],
+      };
+    });
+  },
+
+  updateQuantity: (product_id: string, delta: number) => {
+    set((state) => {
+      const item = state.items.find((i) => i.product_id === product_id);
+      if (!item) return state;
+      const newQty = item.quantity + delta;
+      if (newQty <= 0) {
+        return { items: state.items.filter((i) => i.product_id !== product_id) };
+      }
+      const capped = item.stock > 0 ? Math.min(newQty, item.stock) : newQty;
+      return {
+        items: state.items.map((i) =>
+          i.product_id === product_id ? { ...i, quantity: capped } : i
+        ),
       };
     });
   },

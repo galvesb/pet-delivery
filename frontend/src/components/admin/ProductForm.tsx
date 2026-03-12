@@ -7,6 +7,7 @@ interface ProductFormData {
   name: string;
   description: string;
   price: number;
+  stock: number;
   image_urls: string[];
   cover_index: number;
   categories: string[];
@@ -31,6 +32,7 @@ export function ProductForm({ initial, onSubmit, onCancel }: Props) {
       isCover: i === (initial.cover_index ?? 0),
     }));
   });
+  const [stock, setStock] = useState(initial?.stock?.toString() ?? "0");
   const [selectedCats, setSelectedCats] = useState<string[]>(initial?.categories ?? []);
   const [isFeatured, setIsFeatured] = useState(initial?.is_featured ?? false);
   const [loading, setLoading] = useState(false);
@@ -54,6 +56,7 @@ export function ProductForm({ initial, onSubmit, onCancel }: Props) {
         name,
         description,
         price: parseFloat(price),
+        stock: parseInt(stock, 10) || 0,
         image_urls: images.map((i) => i.url),
         cover_index: coverIdx >= 0 ? coverIdx : 0,
         categories: selectedCats,
@@ -95,6 +98,11 @@ export function ProductForm({ initial, onSubmit, onCancel }: Props) {
       <div>
         <label style={{ display: "block", marginBottom: 4, fontWeight: 600 }}>Preço (R$)</label>
         <input type="number" value={price} onChange={(e) => setPrice(e.target.value)} required min="0.01" step="0.01" placeholder="45.00" style={inputStyle} />
+      </div>
+
+      <div>
+        <label style={{ display: "block", marginBottom: 4, fontWeight: 600 }}>Quantidade em estoque</label>
+        <input type="number" value={stock} onChange={(e) => setStock(e.target.value)} required min="0" step="1" placeholder="0" style={inputStyle} />
       </div>
 
       <div>

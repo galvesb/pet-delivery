@@ -25,6 +25,7 @@ def _to_response(p: Product) -> ProductResponse:
         categories=p.categories,
         is_active=p.is_active,
         is_featured=p.is_featured,
+        stock=p.stock,
     )
 
 

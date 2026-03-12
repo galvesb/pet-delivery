@@ -7,12 +7,16 @@ interface Props {
 }
 
 export function ProductCard({ product }: Props) {
-  const { addItem } = useCart();
+  const { addItem, items } = useCart();
   const navigate = useNavigate();
+  const inCart = items.find((i) => i.product_id === product.id);
+  const outOfStock = product.stock === 0;
+  const atMax = !outOfStock && !!inCart && inCart.quantity >= product.stock;
+  const disabled = outOfStock || atMax;
 
   const handleAdd = (e: React.MouseEvent) => {
     e.stopPropagation();
-    addItem(product);
+    if (!disabled) addItem(product);
   };
 
   return (
@@ -34,9 +38,10 @@ export function ProductCard({ product }: Props) {
           <button
             className="add-to-cart-btn"
             onClick={handleAdd}
+            disabled={disabled}
             aria-label={`Adicionar ${product.name} ao carrinho`}
           >
-            + Add
+            {outOfStock ? "Esgotado" : "+ Add"}
           </button>
         </div>
       </div>
