@@ -879,3 +879,36 @@ footer {
     border: 1px solid #eee;
     border-radius: 4px;
 }
+
+/* =============================================
+   ADMIN LAYOUT — Header do painel admin
+   ============================================= */
+.admin-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 16px 40px;
+    background: var(--white);
+    border-bottom: var(--border-thick);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+.admin-logo {
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--primary-red);
+    text-decoration: none;
+}
+
+.admin-header-actions {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.admin-username {
+    font-size: 14px;
+    color: var(--gray-text);
+}

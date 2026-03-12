@@ -1,10 +1,7 @@
 import { Routes, Route } from "react-router-dom";
-import { Header } from "@/components/layout/Header";
-import { Footer } from "@/components/layout/Footer";
-import { CartSidebar } from "@/components/cart/CartSidebar";
-import { CartOverlay } from "@/components/cart/CartOverlay";
 import { ProtectedRoute } from "@/components/auth/ProtectedRoute";
-import { PromoBanner } from "@/components/home/PromoBanner";
+import { PublicLayout } from "@/components/layout/PublicLayout";
+import { AdminLayout } from "@/components/layout/AdminLayout";
 import { HomePage } from "@/pages/HomePage";
 import { LoginPage } from "@/pages/LoginPage";
 import { RegisterPage } from "@/pages/RegisterPage";
@@ -23,42 +20,35 @@ import { FaqFormPage } from "@/pages/admin/FaqFormPage";
 
 export function App() {
   return (
-    <>
-      <PromoBanner />
-      <Header />
-      <main>
-        <Routes>
-          {/* Públicas */}
-          <Route path="/" element={<HomePage />} />
-          <Route path="/login" element={<LoginPage />} />
-          <Route path="/register" element={<RegisterPage />} />
-          <Route path="/products" element={<ProductsPage />} />
-          <Route path="/produto/:id" element={<ProductDetailPage />} />
+    <Routes>
+      {/* Layout público */}
+      <Route element={<PublicLayout />}>
+        <Route path="/" element={<HomePage />} />
+        <Route path="/login" element={<LoginPage />} />
+        <Route path="/register" element={<RegisterPage />} />
+        <Route path="/products" element={<ProductsPage />} />
+        <Route path="/produto/:id" element={<ProductDetailPage />} />
+      </Route>
 
-          {/* Admin (requer role ADMIN) */}
-          <Route element={<ProtectedRoute requiredRole="ADMIN" />}>
-            <Route path="/admin" element={<DashboardPage />} />
-            <Route path="/admin/products" element={<AdminProductsPage />} />
-            <Route path="/admin/products/new" element={<ProductFormPage />} />
-            <Route path="/admin/products/:id/edit" element={<ProductFormPage />} />
-            <Route path="/admin/categories" element={<CategoriesPage />} />
-            <Route path="/admin/banners" element={<BannersPage />} />
-            <Route path="/admin/banners/new" element={<BannerFormPage />} />
-            <Route path="/admin/banners/:id/edit" element={<BannerFormPage />} />
-            <Route path="/admin/brands" element={<BrandsPage />} />
-            <Route path="/admin/brands/new" element={<BrandFormPage />} />
-            <Route path="/admin/brands/:id/edit" element={<BrandFormPage />} />
-            <Route path="/admin/faqs" element={<FaqPage />} />
-            <Route path="/admin/faqs/new" element={<FaqFormPage />} />
-            <Route path="/admin/faqs/:id" element={<FaqFormPage />} />
-          </Route>
-        </Routes>
-      </main>
-      <Footer />
-
-      {/* Carrinho */}
-      <CartOverlay />
-      <CartSidebar />
-    </>
+      {/* Layout admin (requer role ADMIN) */}
+      <Route element={<ProtectedRoute requiredRole="ADMIN" />}>
+        <Route element={<AdminLayout />}>
+          <Route path="/admin" element={<DashboardPage />} />
+          <Route path="/admin/products" element={<AdminProductsPage />} />
+          <Route path="/admin/products/new" element={<ProductFormPage />} />
+          <Route path="/admin/products/:id/edit" element={<ProductFormPage />} />
+          <Route path="/admin/categories" element={<CategoriesPage />} />
+          <Route path="/admin/banners" element={<BannersPage />} />
+          <Route path="/admin/banners/new" element={<BannerFormPage />} />
+          <Route path="/admin/banners/:id/edit" element={<BannerFormPage />} />
+          <Route path="/admin/brands" element={<BrandsPage />} />
+          <Route path="/admin/brands/new" element={<BrandFormPage />} />
+          <Route path="/admin/brands/:id/edit" element={<BrandFormPage />} />
+          <Route path="/admin/faqs" element={<FaqPage />} />
+          <Route path="/admin/faqs/new" element={<FaqFormPage />} />
+          <Route path="/admin/faqs/:id" element={<FaqFormPage />} />
+        </Route>
+      </Route>
+    </Routes>
   );
 }
