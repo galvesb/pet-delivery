@@ -22,6 +22,7 @@ async def init_db(client: AsyncIOMotorClient) -> None:
     from app.models.banner import Banner
     from app.models.brand import Brand
     from app.models.category import Category
+    from app.models.faq import FaqItem
     from app.models.product import Product
     from app.models.user import User
     from app.models.revoked_token import RevokedToken
@@ -29,5 +30,5 @@ async def init_db(client: AsyncIOMotorClient) -> None:
     db = client[settings.MONGO_DB]
     await init_beanie(
         database=db,
-        document_models=[Banner, Brand, Category, Product, User, RevokedToken],
+        document_models=[Banner, Brand, Category, FaqItem, Product, User, RevokedToken],
     )

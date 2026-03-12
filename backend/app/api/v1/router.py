@@ -1,6 +1,6 @@
 from fastapi import APIRouter
 
-from app.api.v1.endpoints import auth, banners, brands, cart, categories, products, uploads, users
+from app.api.v1.endpoints import auth, banners, brands, cart, categories, faqs, products, uploads, users
 
 router = APIRouter(prefix="/api/v1")
 
@@ -12,3 +12,4 @@ router.include_router(users.router)
 router.include_router(uploads.router)
 router.include_router(banners.router)
 router.include_router(brands.router)
+router.include_router(faqs.router)

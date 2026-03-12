@@ -50,6 +50,9 @@ export function DashboardPage() {
         <Link to="/admin/brands" className="btn btn-outline" style={{ textAlign: "center" }}>
           Gerenciar Marcas
         </Link>
+        <Link to="/admin/faqs" className="btn btn-outline" style={{ textAlign: "center" }}>
+          Gerenciar FAQ
+        </Link>
       </div>
     </div>
   );

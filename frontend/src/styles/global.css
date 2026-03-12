@@ -819,6 +819,57 @@ footer {
 }
 
 /* =============================================
+   FAQ ACCORDION
+   ============================================= */
+.faq-accordion {
+    border: 1px solid #ddd;
+    border-radius: var(--border-radius);
+    overflow: hidden;
+}
+.faq-item {
+    border-bottom: 1px solid #ddd;
+}
+.faq-item:last-child {
+    border-bottom: none;
+}
+.faq-question {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
+    padding: 16px 20px;
+    background: var(--white);
+    border: none;
+    cursor: pointer;
+    font-family: 'Epilogue', sans-serif;
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--dark);
+    text-align: left;
+    transition: background 0.15s;
+}
+.faq-question:hover {
+    background: var(--light-red);
+}
+.faq-icon {
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--primary-red);
+    flex-shrink: 0;
+    line-height: 1;
+}
+.faq-answer {
+    padding: 12px 20px 16px;
+    font-size: 14px;
+    color: var(--gray-text);
+    line-height: 1.6;
+    background: var(--white);
+    border-top: 1px solid #eee;
+    white-space: pre-wrap;
+}
+
+/* =============================================
    ADMIN — Banner & Brand table thumbnails
    ============================================= */
 .admin-brand-logo-thumb {

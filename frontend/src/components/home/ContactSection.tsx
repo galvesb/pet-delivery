@@ -1,7 +1,20 @@
+import { useEffect, useState } from "react";
+import { api } from "@/api/client";
+import type { FaqItem } from "@/types";
+import { FaqAccordion } from "@/components/home/FaqAccordion";
+
 export function ContactSection() {
+  const [faqs, setFaqs] = useState<FaqItem[]>([]);
+
+  useEffect(() => {
+    api.get<FaqItem[]>("/faqs").then((res) => {
+      setFaqs(res.data);
+    }).catch(() => {});
+  }, []);
+
   return (
     <section className="contact-section container">
-      <h2>Onde estamos</h2>
+      <h2>Contato & Perguntas Frequentes</h2>
       <div className="contact-grid">
         <div className="contact-info">
           <div className="contact-item">
@@ -45,16 +58,11 @@ export function ContactSection() {
             </div>
           </div>
         </div>
-        <div className="contact-map">
-          <iframe
-            title="Localização no mapa"
-            src="https://www.openstreetmap.org/export/embed.html?bbox=-45.43%2C-23.63%2C-45.37%2C-23.59&layer=mapnik&marker=-23.608%2C-45.408"
-            width="100%"
-            height="350"
-            loading="lazy"
-            style={{ border: "none", borderRadius: "var(--border-radius)" }}
-          />
-        </div>
+        {faqs.length > 0 && (
+          <div>
+            <FaqAccordion items={faqs} />
+          </div>
+        )}
       </div>
     </section>
   );

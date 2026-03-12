@@ -55,6 +55,14 @@ export interface Brand {
   order: number;
 }
 
+export interface FaqItem {
+  id: string;
+  question: string;
+  answer: string;
+  order: number;
+  is_active: boolean;
+}
+
 export interface CartItem {
   product_id: string;
   name: string;

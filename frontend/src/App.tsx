@@ -18,6 +18,8 @@ import { BannersPage } from "@/pages/admin/BannersPage";
 import { BannerFormPage } from "@/pages/admin/BannerFormPage";
 import { BrandsPage } from "@/pages/admin/BrandsPage";
 import { BrandFormPage } from "@/pages/admin/BrandFormPage";
+import { FaqPage } from "@/pages/admin/FaqPage";
+import { FaqFormPage } from "@/pages/admin/FaqFormPage";
 
 export function App() {
   return (
@@ -46,6 +48,9 @@ export function App() {
             <Route path="/admin/brands" element={<BrandsPage />} />
             <Route path="/admin/brands/new" element={<BrandFormPage />} />
             <Route path="/admin/brands/:id/edit" element={<BrandFormPage />} />
+            <Route path="/admin/faqs" element={<FaqPage />} />
+            <Route path="/admin/faqs/new" element={<FaqFormPage />} />
+            <Route path="/admin/faqs/:id" element={<FaqFormPage />} />
           </Route>
         </Routes>
       </main>
