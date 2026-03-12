@@ -4,6 +4,7 @@ import { Footer } from "@/components/layout/Footer";
 import { CartSidebar } from "@/components/cart/CartSidebar";
 import { CartOverlay } from "@/components/cart/CartOverlay";
 import { ProtectedRoute } from "@/components/auth/ProtectedRoute";
+import { PromoBanner } from "@/components/home/PromoBanner";
 import { HomePage } from "@/pages/HomePage";
 import { LoginPage } from "@/pages/LoginPage";
 import { RegisterPage } from "@/pages/RegisterPage";
@@ -21,6 +22,7 @@ import { BrandFormPage } from "@/pages/admin/BrandFormPage";
 export function App() {
   return (
     <>
+      <PromoBanner />
       <Header />
       <main>
         <Routes>

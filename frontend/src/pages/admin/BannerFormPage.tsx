@@ -32,6 +32,7 @@ export function BannerFormPage() {
   const isEditing = Boolean(id);
   const [form, setForm] = useState<BannerFormData>(defaultForm);
   const [loading, setLoading] = useState(isEditing);
+  const [saving, setSaving] = useState(false);
 
   useEffect(() => {
     if (!id) return;
@@ -60,14 +61,22 @@ export function BannerFormPage() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (isEditing) {
-      await api.put(`/banners/${id}`, form);
-      toast.success("Banner atualizado!");
-    } else {
-      await api.post("/banners", form);
-      toast.success("Banner criado!");
+    setSaving(true);
+    try {
+      if (isEditing) {
+        await api.put(`/banners/${id}`, form);
+        toast.success("Banner atualizado!");
+      } else {
+        await api.post("/banners", form);
+        toast.success("Banner criado!");
+      }
+      navigate("/admin/banners");
+    } catch (err: any) {
+      const msg = err?.response?.data?.detail ?? "Erro ao salvar banner. Verifique os dados.";
+      toast.error(typeof msg === "string" ? msg : JSON.stringify(msg));
+    } finally {
+      setSaving(false);
     }
-    navigate("/admin/banners");
   };
 
   if (loading) {
@@ -237,8 +246,10 @@ export function BannerFormPage() {
           </div>
 
           <div style={{ display: "flex", gap: 12 }}>
-            <button type="submit" className="btn">{isEditing ? "Salvar alterações" : "Criar banner"}</button>
-            <button type="button" className="btn btn-outline" onClick={() => navigate("/admin/banners")}>Cancelar</button>
+            <button type="submit" className="btn" disabled={saving}>
+              {saving ? "Salvando..." : isEditing ? "Salvar alterações" : "Criar banner"}
+            </button>
+            <button type="button" className="btn btn-outline" onClick={() => navigate("/admin/banners")} disabled={saving}>Cancelar</button>
           </div>
         </form>
       </div>
