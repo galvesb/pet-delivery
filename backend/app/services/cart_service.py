@@ -19,6 +19,7 @@ def _cart_items_to_schema(items: List[CartItem]) -> List[CartItemSchema]:
             price=item.price,
             image_url=item.image_url,
             quantity=item.quantity,
+            stock=item.stock,
         )
         for item in items
     ]
@@ -48,6 +49,7 @@ async def sync_cart(user: User, data: CartSyncRequest) -> CartResponse:
                 original_price=original_price,
                 image_url=item.image_url,
                 quantity=item.quantity,
+                stock=product.stock,
             )
         )
 
@@ -58,6 +60,7 @@ async def sync_cart(user: User, data: CartSyncRequest) -> CartResponse:
             price=i.price,
             image_url=i.image_url,
             quantity=i.quantity,
+            stock=i.stock,
         )
         for i in updated_items
     ]

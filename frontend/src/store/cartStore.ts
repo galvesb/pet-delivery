@@ -1,4 +1,5 @@
 import { create } from "zustand";
+import { persist } from "zustand/middleware";
 import type { CartItem, Product } from "@/types";
 
 interface CartState {
@@ -17,7 +18,9 @@ interface CartState {
   toggleCart: () => void;
 }
 
-export const useCartStore = create<CartState>((set, get) => ({
+export const useCartStore = create<CartState>()(
+  persist(
+    (set, get) => ({
   items: [],
   isOpen: false,
 
@@ -100,4 +103,10 @@ export const useCartStore = create<CartState>((set, get) => ({
   openCart: () => set({ isOpen: true }),
   closeCart: () => set({ isOpen: false }),
   toggleCart: () => set((state) => ({ isOpen: !state.isOpen })),
-}));
+    }),
+    {
+      name: "cart-storage",
+      partialize: (state) => ({ items: state.items }),
+    }
+  )
+);

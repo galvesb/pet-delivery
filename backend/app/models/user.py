@@ -17,6 +17,7 @@ class CartItem(BaseModel):
     price: float
     image_url: str
     quantity: int = Field(ge=1)
+    stock: int = 0
 
 
 class User(Document):

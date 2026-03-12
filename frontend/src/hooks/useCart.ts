@@ -1,13 +1,14 @@
-import { useCallback, useRef } from "react";
+import { useCallback, useEffect, useRef } from "react";
 import { api } from "@/api/client";
 import { useAuthStore } from "@/store/authStore";
 import { useCartStore } from "@/store/cartStore";
-import type { Product } from "@/types";
+import type { CartItem, Product } from "@/types";
 
 export function useCart() {
   const { user } = useAuthStore();
   const store = useCartStore();
   const syncTimeout = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const hydratedRef = useRef<string | null>(null);
 
   const syncToServer = useCallback(() => {
     if (!user) return;
@@ -45,8 +46,30 @@ export function useCart() {
     [store, syncToServer]
   );
 
+  // Hidratação: quando o usuário faz login, reconcilia localStorage com servidor
+  useEffect(() => {
+    if (!user) return;
+    if (hydratedRef.current === user.id) return; // já hidratou para este usuário
+    hydratedRef.current = user.id;
+
+    api.get<{ items: CartItem[] }>("/cart")
+      .then((res) => {
+        const serverItems = res.data.items ?? [];
+        const localItems = useCartStore.getState().items;
+        if (localItems.length === 0 && serverItems.length > 0) {
+          // local vazio, servidor tem itens → usa servidor
+          store.setItems(serverItems);
+        } else if (localItems.length > 0) {
+          // local tem itens → mantém local, sincroniza servidor
+          api.patch("/cart", { items: localItems }).catch(() => {});
+        }
+      })
+      .catch(() => {});
+  }, [user, store]);
+
   const clearCart = useCallback(async () => {
     store.clearCart();
+    hydratedRef.current = null;
     if (user) {
       try {
         await api.delete("/cart");

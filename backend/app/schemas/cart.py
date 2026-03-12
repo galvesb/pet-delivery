@@ -10,6 +10,7 @@ class CartItemSchema(BaseModel):
     original_price: Optional[float] = None
     image_url: str
     quantity: int = Field(ge=1)
+    stock: int = 0
 
 
 class CartSyncRequest(BaseModel):
