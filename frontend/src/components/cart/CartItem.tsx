@@ -25,6 +25,11 @@ export function CartItem({ item }: Props) {
           </button>
         </div>
         <div className="cart-item-unit-price">
+          {item.original_price && (
+            <span className="cart-item-price-original">
+              R$ {item.original_price.toFixed(2).replace(".", ",")}
+            </span>
+          )}
           R$ {item.price.toFixed(2).replace(".", ",")} / un.
         </div>
         <div className="cart-item-bottom">

@@ -14,11 +14,14 @@ category_repo = CategoryRepository()
 def _to_response(p: Product) -> ProductResponse:
     cover_idx = p.cover_index if p.cover_index < len(p.image_urls) else 0
     cover_url = p.image_urls[cover_idx] if p.image_urls else ""
+    effective_price = p.discount_price if p.discount_price is not None else p.price
     return ProductResponse(
         id=str(p.id),
         name=p.name,
         description=p.description,
         price=p.price,
+        discount_price=p.discount_price,
+        effective_price=effective_price,
         image_urls=p.image_urls,
         cover_index=cover_idx,
         cover_url=cover_url,
@@ -87,10 +90,12 @@ async def create_product(data: ProductCreate) -> ProductResponse:
         name=data.name,
         description=data.description,
         price=data.price,
+        discount_price=data.discount_price,
         image_urls=data.image_urls,
         cover_index=data.cover_index,
         categories=data.categories,
         is_featured=data.is_featured,
+        stock=data.stock,
     )
     product = await product_repo.create(product)
     return _to_response(product)

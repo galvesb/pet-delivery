@@ -20,6 +20,16 @@ class ProductCreate(BaseModel):
     categories: List[str] = Field(min_length=1)
     is_featured: bool = False
     stock: int = Field(default=0, ge=0)
+    discount_price: Optional[float] = Field(None, gt=0)
+
+    @field_validator("discount_price")
+    @classmethod
+    def discount_below_price(cls, v: Optional[float], info) -> Optional[float]:
+        if v is not None:
+            price = info.data.get("price")
+            if price is not None and v >= price:
+                raise ValueError("Preço com desconto deve ser menor que o preço original")
+        return v
 
     @field_validator("cover_index")
     @classmethod
@@ -47,6 +57,7 @@ class ProductUpdate(BaseModel):
     is_active: Optional[bool] = None
     is_featured: Optional[bool] = None
     stock: Optional[int] = Field(None, ge=0)
+    discount_price: Optional[float] = Field(None, gt=0)
 
     @field_validator("categories")
     @classmethod
@@ -61,6 +72,8 @@ class ProductResponse(BaseModel):
     name: str
     description: str
     price: float
+    discount_price: Optional[float]
+    effective_price: float
     image_urls: List[str]
     cover_index: int
     cover_url: str

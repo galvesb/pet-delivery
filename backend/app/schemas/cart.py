@@ -1,4 +1,4 @@
-from typing import List
+from typing import List, Optional
 
 from pydantic import BaseModel, Field
 
@@ -7,6 +7,7 @@ class CartItemSchema(BaseModel):
     product_id: str
     name: str
     price: float = Field(gt=0)
+    original_price: Optional[float] = None
     image_url: str
     quantity: int = Field(ge=1)
 

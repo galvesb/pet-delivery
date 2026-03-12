@@ -30,7 +30,7 @@ async def get_cart(user: User) -> CartResponse:
 
 
 async def sync_cart(user: User, data: CartSyncRequest) -> CartResponse:
-    # Valida que os produtos existem e estão ativos
+    updated_items: list[CartItemSchema] = []
     for item in data.items:
         product = await product_repo.find_by_id(item.product_id)
         if not product or not product.is_active:
@@ -38,19 +38,31 @@ async def sync_cart(user: User, data: CartSyncRequest) -> CartResponse:
                 status_code=422,
                 detail=f"Produto '{item.product_id}' não encontrado ou inativo",
             )
+        effective_price = product.discount_price if product.discount_price is not None else product.price
+        original_price = product.price if product.discount_price is not None else None
+        updated_items.append(
+            CartItemSchema(
+                product_id=item.product_id,
+                name=product.name,
+                price=effective_price,
+                original_price=original_price,
+                image_url=item.image_url,
+                quantity=item.quantity,
+            )
+        )
 
     new_cart = [
         CartItem(
-            product_id=item.product_id,
-            name=item.name,
-            price=item.price,
-            image_url=item.image_url,
-            quantity=item.quantity,
+            product_id=i.product_id,
+            name=i.name,
+            price=i.price,
+            image_url=i.image_url,
+            quantity=i.quantity,
         )
-        for item in data.items
+        for i in updated_items
     ]
     await user_repo.update_cart(user, new_cart)
-    return CartResponse.from_items(data.items)
+    return CartResponse.from_items(updated_items)
 
 
 async def clear_cart(user: User) -> None:

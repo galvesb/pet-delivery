@@ -2,7 +2,7 @@ import { useCart } from "@/hooks/useCart";
 import { CartItem } from "./CartItem";
 
 export function CartSidebar() {
-  const { items, isOpen, closeCart, getTotal } = useCart();
+  const { items, isOpen, closeCart, getTotal, getTotalSavings } = useCart();
 
   return (
     <aside className={`cart-sidebar${isOpen ? " active" : ""}`} id="cart-sidebar" aria-label="Carrinho">
@@ -22,6 +22,11 @@ export function CartSidebar() {
       </div>
 
       <div className="cart-footer">
+        {getTotalSavings() > 0 && (
+          <div className="cart-savings">
+            Você economizou R$ {getTotalSavings().toFixed(2).replace(".", ",")}
+          </div>
+        )}
         <div className="cart-total">
           <span>Total:</span>
           <span>R$ {getTotal().toFixed(2).replace(".", ",")}</span>

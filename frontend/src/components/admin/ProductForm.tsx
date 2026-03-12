@@ -7,6 +7,7 @@ interface ProductFormData {
   name: string;
   description: string;
   price: number;
+  discount_price?: number | null;
   stock: number;
   image_urls: string[];
   cover_index: number;
@@ -32,6 +33,8 @@ export function ProductForm({ initial, onSubmit, onCancel }: Props) {
       isCover: i === (initial.cover_index ?? 0),
     }));
   });
+  const [discountPrice, setDiscountPrice] = useState(initial?.discount_price?.toString() ?? "");
+  const [discountError, setDiscountError] = useState("");
   const [stock, setStock] = useState(initial?.stock?.toString() ?? "0");
   const [selectedCats, setSelectedCats] = useState<string[]>(initial?.categories ?? []);
   const [isFeatured, setIsFeatured] = useState(initial?.is_featured ?? false);
@@ -49,13 +52,21 @@ export function ProductForm({ initial, onSubmit, onCancel }: Props) {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    const parsedPrice = parseFloat(price);
+    const parsedDiscount = discountPrice ? parseFloat(discountPrice) : null;
+    if (parsedDiscount !== null && parsedDiscount >= parsedPrice) {
+      setDiscountError("O preço com desconto deve ser menor que o preço original");
+      return;
+    }
+    setDiscountError("");
     setLoading(true);
     const coverIdx = images.findIndex((i) => i.isCover);
     try {
       await onSubmit({
         name,
         description,
-        price: parseFloat(price),
+        price: parsedPrice,
+        discount_price: parsedDiscount,
         stock: parseInt(stock, 10) || 0,
         image_urls: images.map((i) => i.url),
         cover_index: coverIdx >= 0 ? coverIdx : 0,
@@ -98,6 +109,22 @@ export function ProductForm({ initial, onSubmit, onCancel }: Props) {
       <div>
         <label style={{ display: "block", marginBottom: 4, fontWeight: 600 }}>Preço (R$)</label>
         <input type="number" value={price} onChange={(e) => setPrice(e.target.value)} required min="0.01" step="0.01" placeholder="45.00" style={inputStyle} />
+      </div>
+
+      <div>
+        <label style={{ display: "block", marginBottom: 4, fontWeight: 600 }}>
+          Preço com desconto (R$) <span style={{ fontWeight: 400, color: "var(--gray-text)", fontSize: 12 }}>opcional</span>
+        </label>
+        <input
+          type="number"
+          value={discountPrice}
+          onChange={(e) => { setDiscountPrice(e.target.value); setDiscountError(""); }}
+          min="0.01"
+          step="0.01"
+          placeholder="Deixe vazio para sem desconto"
+          style={inputStyle}
+        />
+        {discountError && <span style={{ fontSize: 12, color: "var(--primary-red)" }}>{discountError}</span>}
       </div>
 
       <div>

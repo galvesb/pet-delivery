@@ -10,6 +10,7 @@ interface CartState {
   clearCart: () => void;
   setItems: (items: CartItem[]) => void;
   getTotal: () => number;
+  getTotalSavings: () => number;
   getTotalItems: () => number;
   openCart: () => void;
   closeCart: () => void;
@@ -40,7 +41,8 @@ export const useCartStore = create<CartState>((set, get) => ({
           {
             product_id: product.id,
             name: product.name,
-            price: product.price,
+            price: product.effective_price,
+            original_price: product.discount_price ? product.price : null,
             image_url: product.cover_url,
             quantity: 1,
             stock: product.stock,
@@ -80,6 +82,14 @@ export const useCartStore = create<CartState>((set, get) => ({
   getTotal: () => {
     const { items } = get();
     return items.reduce((acc, item) => acc + item.price * item.quantity, 0);
+  },
+
+  getTotalSavings: () => {
+    const { items } = get();
+    return items.reduce((acc, item) => {
+      if (!item.original_price) return acc;
+      return acc + (item.original_price - item.price) * item.quantity;
+    }, 0);
   },
 
   getTotalItems: () => {

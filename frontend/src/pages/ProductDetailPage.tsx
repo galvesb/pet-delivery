@@ -89,9 +89,25 @@ export function ProductDetailPage() {
             {product.name}
           </h1>
 
-          <p className="product-detail-price">
-            R$ {product.price.toFixed(2).replace(".", ",")}
-          </p>
+          {product.discount_price ? (
+            <div className="product-detail-price-group">
+              <span className="product-detail-price-original">
+                R$ {product.price.toFixed(2).replace(".", ",")}
+              </span>
+              <span className="product-detail-price">
+                R$ {product.effective_price.toFixed(2).replace(".", ",")}
+              </span>
+              <div className="product-detail-savings">
+                Você economiza R${" "}
+                {(product.price - product.effective_price).toFixed(2).replace(".", ",")}{" "}
+                ({Math.round((1 - product.effective_price / product.price) * 100)}%)
+              </div>
+            </div>
+          ) : (
+            <p className="product-detail-price">
+              R$ {product.price.toFixed(2).replace(".", ",")}
+            </p>
+          )}
 
           {product.description && (
             <p className="product-detail-description">{product.description}</p>

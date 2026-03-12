@@ -24,6 +24,8 @@ export interface Product {
   name: string;
   description: string;
   price: number;
+  discount_price: number | null;
+  effective_price: number;
   image_urls: string[];
   cover_index: number;
   cover_url: string;
@@ -57,6 +59,7 @@ export interface CartItem {
   product_id: string;
   name: string;
   price: number;
+  original_price: number | null;
   image_url: string;
   quantity: number;
   stock: number;

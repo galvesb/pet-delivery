@@ -60,6 +60,7 @@ export function useCart() {
     items: store.items,
     isOpen: store.isOpen,
     getTotal: store.getTotal,
+    getTotalSavings: store.getTotalSavings,
     getTotalItems: store.getTotalItems,
     openCart: store.openCart,
     closeCart: store.closeCart,

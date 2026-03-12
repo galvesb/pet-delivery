@@ -1,5 +1,5 @@
 from datetime import UTC, datetime
-from typing import List
+from typing import List, Optional
 
 from beanie import Document
 from pydantic import Field
@@ -16,6 +16,7 @@ class Product(Document):
     is_active: bool = True
     is_featured: bool = False
     stock: int = Field(default=0, ge=0)
+    discount_price: Optional[float] = None
     created_at: datetime = Field(default_factory=lambda: datetime.now(UTC))
 
     class Settings:
