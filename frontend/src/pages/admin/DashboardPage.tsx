@@ -53,6 +53,9 @@ export function DashboardPage() {
         <Link to="/admin/faqs" className="btn btn-outline" style={{ textAlign: "center" }}>
           Gerenciar FAQ
         </Link>
+        <Link to="/" className="btn btn-outline" style={{ textAlign: "center" }}>
+          ← Ver loja
+        </Link>
       </div>
     </div>
   );

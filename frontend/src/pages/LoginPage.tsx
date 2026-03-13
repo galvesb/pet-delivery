@@ -25,7 +25,7 @@ export function LoginPage() {
   };
 
   return (
-    <div style={{ minHeight: "100vh", display: "flex", alignItems: "center", justifyContent: "center", background: "var(--bg-color)" }}>
+    <div style={{ minHeight: "100vh", display: "flex", alignItems: "center", justifyContent: "center", background: "var(--bg-color)", padding: "20px" }}>
       <div style={{ background: "var(--white)", border: "var(--border-thick)", borderRadius: "var(--border-radius)", padding: "40px", width: "100%", maxWidth: 400, boxShadow: "var(--shadow-red)" }}>
         <h2 style={{ marginBottom: 24, fontSize: 28 }}>🐾 Entrar</h2>
         <form onSubmit={handleSubmit}>
