@@ -147,7 +147,7 @@ export function BrandFormPage() {
             </div>
           </div>
 
-          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 16, marginBottom: 24 }}>
+          <div className="admin-form-grid" style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 16, marginBottom: 24 }}>
             <div>
               <label style={{ display: "block", fontWeight: 600, marginBottom: 6 }}>Ordem</label>
               <input

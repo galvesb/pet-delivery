@@ -25,7 +25,7 @@ export function ProductsPage() {
 
   return (
     <div style={{ maxWidth: 900, margin: "0 auto", padding: "40px 20px" }}>
-      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 24 }}>
+      <div className="admin-page-header" style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 24 }}>
         <h1 style={{ fontSize: 28 }}>Produtos</h1>
         <button className="btn" onClick={() => navigate("/admin/products/new")}>+ Novo Produto</button>
       </div>

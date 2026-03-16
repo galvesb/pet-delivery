@@ -160,7 +160,7 @@ export function BannerFormPage() {
             />
           </div>
 
-          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 16, marginBottom: 16 }}>
+          <div className="admin-form-grid" style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 16, marginBottom: 16 }}>
             <div>
               <label style={{ display: "block", fontWeight: 600, marginBottom: 6 }}>Cor de fundo</label>
               <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
@@ -197,7 +197,7 @@ export function BannerFormPage() {
             </div>
           </div>
 
-          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 16, marginBottom: 16 }}>
+          <div className="admin-form-grid" style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 16, marginBottom: 16 }}>
             <div>
               <label style={{ display: "block", fontWeight: 600, marginBottom: 6 }}>Link URL</label>
               <input
@@ -222,7 +222,7 @@ export function BannerFormPage() {
             </div>
           </div>
 
-          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 16, marginBottom: 24 }}>
+          <div className="admin-form-grid" style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 16, marginBottom: 24 }}>
             <div>
               <label style={{ display: "block", fontWeight: 600, marginBottom: 6 }}>Ordem</label>
               <input

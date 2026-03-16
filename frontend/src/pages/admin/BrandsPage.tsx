@@ -24,12 +24,12 @@ export function BrandsPage() {
 
   return (
     <div style={{ maxWidth: 900, margin: "0 auto", padding: "40px 20px" }}>
-      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 24 }}>
+      <div className="admin-page-header" style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 24 }}>
         <h1 style={{ fontSize: 28 }}>Marcas Parceiras</h1>
         <button className="btn" onClick={() => navigate("/admin/brands/new")}>+ Nova Marca</button>
       </div>
 
-      <div style={{ background: "var(--white)", border: "var(--border-thick)", borderRadius: "var(--border-radius)", padding: 24 }}>
+      <div className="admin-table-wrap" style={{ background: "var(--white)", border: "var(--border-thick)", borderRadius: "var(--border-radius)", padding: 24 }}>
         {brands.length === 0 ? (
           <p style={{ color: "var(--gray-text)", textAlign: "center", padding: "40px 0" }}>
             Nenhuma marca cadastrada.

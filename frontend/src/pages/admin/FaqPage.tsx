@@ -41,7 +41,7 @@ export function FaqPage() {
 
   return (
     <div style={{ maxWidth: 900, margin: "0 auto", padding: "40px 20px" }}>
-      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 24 }}>
+      <div className="admin-page-header" style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 24 }}>
         <h1 style={{ fontSize: 28 }}>Perguntas Frequentes (FAQ)</h1>
         <button className="btn" onClick={() => navigate("/admin/faqs/new")}>+ Nova Pergunta</button>
       </div>
@@ -83,7 +83,7 @@ export function FaqPage() {
                     {faq.answer}
                   </div>
                 </div>
-                <div style={{ display: "flex", gap: 8, flexShrink: 0 }}>
+                <div className="admin-faq-actions" style={{ display: "flex", gap: 8, flexShrink: 0 }}>
                   <button
                     className="btn btn-outline"
                     onClick={() => navigate(`/admin/faqs/${faq.id}`)}

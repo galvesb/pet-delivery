@@ -53,7 +53,7 @@ export function CategoriesPage() {
 
   return (
     <div style={{ maxWidth: 800, margin: "0 auto", padding: "40px 20px" }}>
-      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 24 }}>
+      <div className="admin-page-header" style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 24 }}>
         <h1 style={{ fontSize: 28 }}>Categorias</h1>
         <button className="btn" onClick={() => setEditing(null)}>+ Nova Categoria</button>
       </div>
@@ -69,7 +69,7 @@ export function CategoriesPage() {
         </div>
       )}
 
-      <div style={{ background: "var(--white)", border: "var(--border-thick)", borderRadius: "var(--border-radius)", padding: 24 }}>
+      <div className="admin-table-wrap" style={{ background: "var(--white)", border: "var(--border-thick)", borderRadius: "var(--border-radius)", padding: 24 }}>
         <CategoryTable
           categories={categories}
           onEdit={(cat) => setEditing(cat)}
